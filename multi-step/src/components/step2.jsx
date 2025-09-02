@@ -27,14 +27,14 @@ export const Step2 = ({
               <div className="flex gap-2 flex-col items-start ">
                 <div>
                   <span className=" text-[#334155] font-Inter text-[14px] ">
-                    First Name
+             Email
                   </span>
                   <span className="text-[#E14942]">*</span>
                 </div>
 
                 <input
                   onChange={(e) => {
-                    setForm({ ...form1, email: e.target.value });
+                    setForm({ ...form1, Email: e.target.value });
                   }}
                   value={formEmail}
                   placeholder="First Name"

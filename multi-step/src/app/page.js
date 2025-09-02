@@ -9,6 +9,7 @@ const Page = () => {
     email: "",
     phonenumber: "",
     password: "",
+    birthda:"",
   });
   const [step, setStep] = useState("step1");
   const [error, setError] = useState({});
@@ -42,17 +43,17 @@ const Page = () => {
         ;
         <Step2
           step={step}
-          form={form}
-          click={click}
           setForm={setForm}
-          formFirstname={form.firstname}
-          formLastname={form.lastname}
-          formUsername={form.username}
+          formEmail={form.email}
+          formPassword={form.password}
+          formConfirmPassword={form.confirmPassword}
           setStep={setStep}
           form1={form}
           Onclick={click}
         />
-        ;
+        ;<Step3 step={step}s
+        setForm={setForm}
+        formBirthday={form.birthday}/>
       </div>
     </>
   );
