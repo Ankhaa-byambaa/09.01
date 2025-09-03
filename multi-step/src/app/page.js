@@ -1,5 +1,5 @@
 "use client";
-import { Step1, Step2, Step3 } from "@/components";
+import { Step1, Step2, Step3, Step4 } from "@/components";
 import { useState } from "react";
 const Page = () => {
   const [form, setForm] = useState({
@@ -9,23 +9,14 @@ const Page = () => {
     email: "",
     phonenumber: "",
     password: "",
-    birthda:"",
+    birthday: "",
   });
-  const [step, setStep] = useState("step1");
-  const [error, setError] = useState({});
-  console.log(form);
-  const nameRegex = /^[A-Za-z]+$/;
+  const [step, setStep] = useState("step3");
 
-  function click() {
-    if (form.firstname === nameRegex) {
-      return null;
-    } else {
-      return setError({
-        ...error,
-        firstname: "First name cannot contain special characters or numbers.",
-      });
-    }
-  }
+  console.log(form);
+
+  function click() {}
+
   return (
     <>
       <div>
@@ -39,8 +30,11 @@ const Page = () => {
           setStep={setStep}
           form={form}
           button={click}
+          onChange={(e) => {
+            setForm({ ...form, email: e.target.value });
+          }}
         />
-        ;
+
         <Step2
           step={step}
           setForm={setForm}
@@ -51,34 +45,18 @@ const Page = () => {
           form1={form}
           Onclick={click}
         />
-        ;<Step3 step={step}s
-        setForm={setForm}
-        formBirthday={form.birthday}/>
+
+        <Step3
+          step={step}
+          setForm={setForm}
+          formBirthday={form.birthday}
+          setStep={setStep}
+        />
+        <Step4 step={step} />
       </div>
     </>
   );
 };
 export default Page;
 {
-  /* <Step3
-          step={step}
-          click={click}
-          setForm={setForm}
-          formFirstname={form.firstname}
-          formLastname={form.lastname}
-          formUsername={form.username}
-          setStep={setStep}
-          form={form}
-        />
-        ;
-        <Step4
-          step={step}
-          click={click}
-          setForm={setForm}
-          formFirstname={form.firstname}
-          formLastname={form.lastname}
-          formUsername={form.username}
-          setStep={setStep}
-          form={form}
-        /> */
 }

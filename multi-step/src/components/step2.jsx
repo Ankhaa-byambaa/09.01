@@ -1,3 +1,5 @@
+"use client";
+import { useState } from "react";
 export const Step2 = ({
   step,
   setForm,
@@ -5,17 +7,58 @@ export const Step2 = ({
   formPassword,
   formPhonenumber,
   formConfirmPassword,
-  Onclick,
   form1,
   setStep,
+  onChange,
 }) => {
+  const [errors, setErrors] = useState({});
+  function Onclick() {
+    const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const phoneNumberRegex = /^\d{8}$/;
+    const newError = {};
+
+    if (emailRegex.test(formEmail)) {
+      newError.email = null;
+    } else {
+      newError.email = "Please provide a valid email address.";
+    }
+    if (passwordRegex.test(formPassword)) {
+      newError.password = null;
+    } else {
+      newError.password = "Password must include letters and numbers.";
+    }
+    if (
+      passwordRegex.test(formConfirmPassword) &&
+      formPassword === formConfirmPassword
+    ) {
+      newError.confrimPassword = null;
+    } else {
+      newError.confrimPassword = "Passwords do not match. Please try again.";
+    }
+    if (phoneNumberRegex.test(formPhonenumber)) {
+      newError.phoneNumber = null;
+    } else {
+      newError.phoneNumber = "Please enter a valid phone number.";
+    }
+    setErrors(newError);
+    if (
+      !newError.phoneNumber &&
+      !newError.confrimPassword &&
+      !newError.password &&
+      !newError.email
+    ) {
+      setStep("step3");
+    }
+  }
   if (step === "step2") {
     return (
       <>
         <div className="w-full h-screen flex justify-center items-center">
-          <div className=" flex flex-col items-between justify-between py-8 px-8 w-120 h-[755px]  bg-white rounded-2 ">
+          <div className=" flex flex-col items-between justify-between py-8 px-8 w-120 h-auto  bg-white rounded-2 ">
             <div className="flex flex-col gap-7 items-center">
-              <div className="flex w-[416px] flex-col gap-2items-start">
+              <div className="flex w-[416px] flex-col gap-2 items-start">
                 <img src="Main.png" className="w-[60px] h-[60px]" />
                 <div className="text-[#202124] font-inter text-[26px]  ">
                   Join Us! 😎
@@ -27,19 +70,22 @@ export const Step2 = ({
               <div className="flex gap-2 flex-col items-start ">
                 <div>
                   <span className=" text-[#334155] font-Inter text-[14px] ">
-             Email
+                    Email
                   </span>
                   <span className="text-[#E14942]">*</span>
                 </div>
 
                 <input
-                  onChange={(e) => {
-                    setForm({ ...form1, Email: e.target.value });
-                  }}
+                  onChange={(e) => setForm({ ...form1, email: e.target.value })}
                   value={formEmail}
                   placeholder="First Name"
                   className="rounded-2 border border-[#CBD5E1] w-[416px] py-3 px-3 text-[#121316] "
                 />
+                {errors.email && (
+                  <div className="text-[#E14942] text-[14px]">
+                    {errors.email}
+                  </div>
+                )}
               </div>
               <div className="flex gap-2 flex-col items-start ">
                 <div>
@@ -48,7 +94,6 @@ export const Step2 = ({
                   </span>
                   <span className="text-[#E14942]">*</span>
                 </div>
-
                 <input
                   onChange={(e) => {
                     setForm({ ...form1, phonenumber: e.target.value });
@@ -57,6 +102,11 @@ export const Step2 = ({
                   placeholder="Last name"
                   className="rounded-2 border border-[#CBD5E1] w-[416px] py-3 px-3 text-[#121316] "
                 />
+                {errors.phoneNumber && (
+                  <div className="text-[#E14942] text-[14px]">
+                    {errors.phoneNumber}
+                  </div>
+                )}
               </div>
               <div className="flex gap-2 flex-col items-start ">
                 <div>
@@ -65,7 +115,6 @@ export const Step2 = ({
                   </span>
                   <span className="text-[#E14942]">*</span>
                 </div>
-
                 <input
                   onChange={(e) => {
                     setForm({ ...form1, password: e.target.value });
@@ -74,6 +123,11 @@ export const Step2 = ({
                   placeholder="Username"
                   className=" border border-[#CBD5E1] w-[416px] py-3 px-3 text-[#121316] rounded-2"
                 />
+                {errors.password && (
+                  <div className="text-[#E14942] text-[14px]">
+                    {errors.password}
+                  </div>
+                )}
               </div>
               <div className="flex gap-2 flex-col items-start ">
                 <div>
@@ -82,18 +136,24 @@ export const Step2 = ({
                   </span>
                   <span className="text-[#E14942]">*</span>
                 </div>
-
                 <input
                   onChange={(e) => {
-                    setForm({ ...form1, password: e.target.value });
+                    setForm((e) =>
+                      setForm({ ...form1, confirmPassword: e.target.value })
+                    );
                   }}
                   value={formConfirmPassword}
                   placeholder="Username"
                   className=" border border-[#CBD5E1] w-[416px] py-3 px-3 text-[#121316] rounded-2"
-                />
+                />{" "}
+                {errors.confrimPassword && (
+                  <div className="text-[#E14942] text-[14px]">
+                    {errors.confrimPassword}
+                  </div>
+                )}
               </div>
             </div>
-            <div className="flex flex-row gap-1">
+            <div className="flex flex-row gap-1 mt-[80px]  mb-[10px]">
               <button
                 onClick={() => {
                   Onclick(setStep("step1"));
@@ -104,11 +164,11 @@ export const Step2 = ({
               </button>
               <button
                 onClick={() => {
-                  Onclick(setStep("step3"));
+                  Onclick();
                 }}
                 className=" flex gap-1 py-2 px-3 justify-center items-center  text-[#FFFFFF] bg-[#121316] w-[280px] rounded-[6px] "
               >
-                Continue {step}/3
+                Continue 2/3
                 <img src="icon.svg" className="w-[24px] h-[24px]"></img>
               </button>
             </div>
