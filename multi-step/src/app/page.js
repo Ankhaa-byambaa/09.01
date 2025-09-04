@@ -2,25 +2,26 @@
 import { Step1, Step2, Step3, Step4 } from "@/components";
 import { useState } from "react";
 const Page = () => {
-  const localForm = localForm.getitem("myForm");
+  // const localForm = localForm.getitem("myForm");
 
   const [form, setForm] = useState(
-    myLocalForm
-      ? JSON.parse(myLocalForm)
-      : {
-          firstname: "",
-          lastname: "",
-          username: "",
-          email: "",
-          phonenumber: "",
-          password: "",
-          birthday: "",
-          picture: "",
-          confirmPassword: "",
-        }
+    // myLocalForm
+    //   ? JSON.parse(myLocalForm)
+    //   : {}
+    {
+      firstname: "",
+      lastname: "",
+      username: "",
+      email: "",
+      phonenumber: "",
+      password: "",
+      birthday: "",
+      picture: "",
+      confirmPassword: "",
+    }
   );
 
-  const [step, setStep] = useState("step1");
+  const [step, setStep] = useState("step3");
 
   console.log(form);
 

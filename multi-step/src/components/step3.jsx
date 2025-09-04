@@ -102,10 +102,10 @@ export const Step3 = ({
                   </span>
                 </div>
 
-                <div className="bg-[#7F7F800D] flex justify-center items-center w-102 h-[180px]  flex-col overflow-scroll  relative">
+                <div className="bg-[#7F7F800D] flex justify-center items-center w-102 h-[180px]  flex-col overflow-scroll  relative rounded-md">
                   {preview ? (
                     <motion.img
-                      whileHover={{ scale: 1.1 }}
+                      whileHover={{ scale: 1.2 }}
                       whileTap={{ scale: 0.8 }}
                       src={preview}
                       className=" absolute  w-full   "
@@ -136,7 +136,7 @@ export const Step3 = ({
             </div>
             <div className="flex flex-row gap-1">
               <motion.button
-                whileHover={{ scale: 1.1 }}
+                whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.8 }}
                 onClick={() => {
                   setStep("step2");
@@ -146,7 +146,7 @@ export const Step3 = ({
                 <img src="backIcon.svg" className="w-[24px] h-[24px]" /> Back
               </motion.button>
               <motion.button
-                whileHover={{ scale: 1.1 }}
+                whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.8 }}
                 onClick={() => {
                   click();
