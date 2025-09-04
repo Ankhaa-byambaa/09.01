@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
-import { Inputs } from ".";
+
+import { motion } from "motion/react";
 export const Step1 = ({
   step,
   formLastname,
@@ -38,6 +39,10 @@ export const Step1 = ({
     }
     setErrors(newError);
     if (!newError.firstname && !newError.lastname && !newError.username) {
+      if (typeof window !== "undefined") {
+        localStorage.setItem("myForm", JSON.stringify(form));
+      }
+
       setStep("step2");
     }
   }
@@ -47,7 +52,15 @@ export const Step1 = ({
     return (
       <>
         <div className="w-full h-screen flex justify-center items-center">
-          <div className=" flex flex-col items-between justify-between py-8 px-8 w-120 h-auto  bg-white rounded-2 ">
+          <motion.div
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{
+              duration: 0.4,
+              scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+            }}
+            className=" flex flex-col items-between justify-between py-8 px-8 w-120 h-auto  bg-white rounded-2 "
+          >
             <div className="flex flex-col gap-7 items-center">
               <div className="flex w-[416px] flex-col gap-2 items-start">
                 <img src="Main.png" className="w-[60px] h-[60px]" />
@@ -133,16 +146,18 @@ export const Step1 = ({
               </div>
             </div>
 
-            <button
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.8 }}
               onClick={() => {
                 button();
               }}
-              className=" flex gap-1 py-2 px-3 justify-center items-center  text-[#FFFFFF] bg-[#121316] w-[100%] mt-[80px]  mb-[10px]"
+              className=" flex gap-1 py-2 px-3 justify-center items-center  text-[#FFFFFF] bg-[#121316] w-[100%] mt-[80px]  mb-[10px] rounded-[6px]"
             >
               Continue 1/3
               <img src="icon.svg" className="w-[24px] h-[24px]"></img>
-            </button>
-          </div>
+            </motion.button>
+          </motion.div>
         </div>
       </>
     );

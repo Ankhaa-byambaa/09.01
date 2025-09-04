@@ -2,34 +2,39 @@
 import { Step1, Step2, Step3, Step4 } from "@/components";
 import { useState } from "react";
 const Page = () => {
-  const [form, setForm] = useState({
-    firstname: "",
-    lastname: "",
-    username: "",
-    email: "",
-    phonenumber: "",
-    password: "",
-    birthday: "",
-  });
-  const [step, setStep] = useState("step3");
+  const localForm = localForm.getitem("myForm");
+
+  const [form, setForm] = useState(
+    myLocalForm
+      ? JSON.parse(myLocalForm)
+      : {
+          firstname: "",
+          lastname: "",
+          username: "",
+          email: "",
+          phonenumber: "",
+          password: "",
+          birthday: "",
+          picture: "",
+          confirmPassword: "",
+        }
+  );
+
+  const [step, setStep] = useState("step1");
 
   console.log(form);
-
-  function click() {}
 
   return (
     <>
       <div>
         <Step1
           step={step}
-          click={click}
           setForm={setForm}
           formFirstname={form.firstname}
           formLastname={form.lastname}
           formUsername={form.username}
           setStep={setStep}
           form={form}
-          button={click}
           onChange={(e) => {
             setForm({ ...form, email: e.target.value });
           }}
@@ -43,7 +48,6 @@ const Page = () => {
           formConfirmPassword={form.confirmPassword}
           setStep={setStep}
           form1={form}
-          Onclick={click}
         />
 
         <Step3
@@ -51,6 +55,7 @@ const Page = () => {
           setForm={setForm}
           formBirthday={form.birthday}
           setStep={setStep}
+          formPicture={form.picture}
         />
         <Step4 step={step} />
       </div>
