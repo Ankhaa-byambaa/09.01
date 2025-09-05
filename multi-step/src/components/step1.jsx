@@ -13,25 +13,28 @@ export const Step1 = ({
 }) => {
   const [errors, setErrors] = useState({});
   const lastnameRegex = /^[a-zA-Z]+$/;
-  const firstnameRegex = /^[a-zA-Z]+$/;
+  const firstnameRegex = /^[A-Za-z]+$/;
   const usernameRegex = /^[0-9A-Za-z]{6,16}$/;
   const newError = {};
-  <UseEffect
-    form={formUsername}
-    setErrors={setErrors}
-    regex={firstnameRegex}
-    nemError={newError}
-    kk="This username is already taken. Please choose another one."
-  ></UseEffect>;
+  // <UseEffect
+  //   form={formUsername}
+  //   setErrors={setErrors}
+  //   regex={firstnameRegex}
+  //   nemError={newError}
+  //   kk="This username is already taken. Please choose another one."
+  // ></UseEffect>;
   useEffect(() => {
+    const firstnameRegex = /^[A-Za-z]+$/;
+
     if (firstnameRegex.test(formFirstname) || formFirstname === "") {
       newError.fisrtname = null;
     } else {
       newError.firstname =
         "First name cannot contain special characters or numbers.";
     }
-    setErrors({ ...errors, ...newError });
+    setErrors(newError);
   }, [formFirstname]);
+
   useEffect(() => {
     if (lastnameRegex.test(formLastname) || formLastname === "") {
       newError.lastname = null;
