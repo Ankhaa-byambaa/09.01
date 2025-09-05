@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "motion/react";
 
 export const Step3 = ({
@@ -11,6 +11,7 @@ export const Step3 = ({
   formPicture,
 }) => {
   const [preview, setPreview] = useState();
+  const newError = {};
 
   function handleOnchange(e) {
     const file = e.target.files[0];
@@ -21,6 +22,24 @@ export const Step3 = ({
   const [errors, setErrors] = useState({});
   const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
   const imageRegex = "";
+  useEffect(() => {
+    if (imageRegex !== formBirthday || formBirthday === "") {
+      newError.birthday = null;
+    } else {
+      newError.birthday = "Please select a date.";
+    }
+    setErrors({ ...errors, ...newError });
+    console.log(newError.birthday);
+  }, [formBirthday]);
+  useEffect(() => {
+    if (imageRegex !== formPicture || formPicture === "") {
+      newError.picture = null;
+    } else {
+      newError.picture = "Image cannot be blank";
+    }
+
+    setErrors({ ...errors, ...newError });
+  }, [formPicture]);
   function click() {
     // function Gestures() {
     //   <motion.div
@@ -30,7 +49,6 @@ export const Step3 = ({
     //   />;
     // }
 
-    const newError = {};
     // const photoFileRegex = /^[\w,\s-]+\.(jpg|jpeg|png|gif)$/i;
 
     if (dateRegex.test(formBirthday)) {
@@ -47,6 +65,9 @@ export const Step3 = ({
     setErrors(newError);
     if (!newError.birthday && !newError.picture) {
       setStep("step4");
+      {
+        localStorage.setItem("my-form", JSON.stringify(formBirthday));
+      }
     }
   }
   if (step === "step3") {
@@ -77,11 +98,6 @@ export const Step3 = ({
                   <span className=" text-[#334155] font-Inter text-[14px] ">
                     Date of birth
                   </span>
-                  {errors.birthday && (
-                    <div className="text-[#E14942] text-[14px]">
-                      {errors.birthday}
-                    </div>
-                  )}
                 </div>
                 <div className="relative">
                   <input
@@ -90,9 +106,13 @@ export const Step3 = ({
                       setForm({ ...form, birthday: e.target.value });
                     }}
                     value={formBirthday}
-                    placeholder="/YYYY/-/MM/-/DD/"
                     className="rounded-2 border border-[#CBD5E1] w-[416px] py-3 px-3 text-[#121316] inset-0 "
                   ></input>
+                  {errors.birthday && (
+                    <div className="text-[#E14942] text-[14px]">
+                      {errors.birthday}
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="flex gap-2 flex-col items-start  mb-10">

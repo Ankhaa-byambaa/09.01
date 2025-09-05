@@ -1,7 +1,7 @@
 "use client";
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
 import { motion } from "motion/react";
+import { UseEffect } from ".";
 export const Step1 = ({
   step,
   formLastname,
@@ -12,13 +12,46 @@ export const Step1 = ({
   form,
 }) => {
   const [errors, setErrors] = useState({});
+  const lastnameRegex = /^[a-zA-Z]+$/;
+  const firstnameRegex = /^[a-zA-Z]+$/;
+  const usernameRegex = /^[0-9A-Za-z]{6,16}$/;
+  const newError = {};
+  <UseEffect
+    form={formUsername}
+    setErrors={setErrors}
+    regex={firstnameRegex}
+    nemError={newError}
+    kk="This username is already taken. Please choose another one."
+  ></UseEffect>;
+  useEffect(() => {
+    if (firstnameRegex.test(formFirstname) || formFirstname === "") {
+      newError.fisrtname = null;
+    } else {
+      newError.firstname =
+        "First name cannot contain special characters or numbers.";
+    }
+    setErrors({ ...errors, ...newError });
+  }, [formFirstname]);
+  useEffect(() => {
+    if (lastnameRegex.test(formLastname) || formLastname === "") {
+      newError.lastname = null;
+    } else {
+      newError.lastname =
+        "Last name cannot contain special characters or numbers.";
+    }
+    setErrors({ ...errors, ...newError });
+  }, [formLastname]);
+  useEffect(() => {
+    if (usernameRegex.test(formUsername) || formUsername === "") {
+      newError.username = null;
+    } else {
+      newError.username =
+        "This username is already taken. Please choose another one.";
+    }
+    setErrors({ ...errors, ...newError });
+  }, [formLastname]);
 
   function button() {
-    const lastnameRegex = /^[A-Za-z]+$/;
-    const firstnameRegex = /^[A-Za-z]+$/;
-    const usernameRegex = /^[0-9A-Za-z]{6,16}$/;
-    const newError = {};
-
     if (firstnameRegex.test(formFirstname)) {
       newError.fisrtname = null;
     } else {
@@ -39,8 +72,8 @@ export const Step1 = ({
     }
     setErrors(newError);
     if (!newError.firstname && !newError.lastname && !newError.username) {
-      if (typeof window !== "undefined") {
-        localStorage.setItem("myForm", JSON.stringify(form));
+      {
+        localStorage.setItem("my-form", JSON.stringify(form));
       }
 
       setStep("step2");
@@ -92,7 +125,7 @@ export const Step1 = ({
                   }}
                   value={formFirstname}
                   placeholder="First Name"
-                  className="rounded-2 border border-[#CBD5E1] w-[416px] py-3 px-3 text-[#121316] "
+                  className="rounded-2 border border-[#CBD5E1] w-[416px] py-3 px-3 text-[#121316]"
                 />
                 {errors.firstname && (
                   <div className="text-[#E14942] text-[14px]">

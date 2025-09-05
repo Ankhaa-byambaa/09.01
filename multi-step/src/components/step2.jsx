@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "motion/react";
 export const Step2 = ({
   step,
@@ -11,14 +11,57 @@ export const Step2 = ({
   form1,
   setStep,
 }) => {
+  const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const phoneNumberRegex = /^\d{8}$/;
+  const newError = {};
   const [errors, setErrors] = useState({});
+
+  console.log({ errors });
+  useEffect(() => {
+    if (emailRegex.test(formEmail) || formEmail === "") {
+      newError.email = null;
+    } else {
+      newError.email = "Please provide a valid email address.";
+    }
+    setErrors({ ...errors, ...newError });
+
+    console.log(newError.email);
+  }, [formEmail]);
+
+  useEffect(() => {
+    if (passwordRegex.test(formPassword) || formPassword === "") {
+      newError.password = null;
+    } else {
+      newError.password = "Password must include letters and numbers.";
+    }
+    setErrors({ ...errors, ...newError });
+  }, [formPassword]);
+
+  useEffect(() => {
+    if (
+      (passwordRegex.test(formConfirmPassword) &&
+        formPassword === formConfirmPassword) ||
+      formPassword === ""
+    ) {
+      newError.confrimPassword = null;
+    } else {
+      newError.confrimPassword = "Passwords do not match. Please try again.";
+    }
+    setErrors({ ...errors, ...newError });
+  }, [formConfirmPassword]);
+
+  useEffect(() => {
+    console.log({ formPhonenumber });
+    if (phoneNumberRegex.test(formPhonenumber) || formPhonenumber === "") {
+      newError.phoneNumber = null;
+    } else {
+      newError.phoneNumber = "Please enter a valid phone number.";
+    }
+    setErrors({ ...errors, ...newError });
+  }, [formPhonenumber]);
+
   function Onclick() {
-    const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
-
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    const phoneNumberRegex = /\d{8}/;
-    const newError = {};
-
     if (emailRegex.test(formEmail)) {
       newError.email = null;
     } else {
@@ -44,12 +87,15 @@ export const Step2 = ({
     }
     setErrors(newError);
     if (
-      newError.phoneNumber &&
-      newError.confrimPassword &&
-      newError.password &&
-      newError.email
+      !newError.phoneNumber &&
+      !newError.confrimPassword &&
+      !newError.password &&
+      !newError.email
     ) {
-      localStorage.setItem("myForm", JSON.stringify(form1));
+      {
+        localStorage.setItem("my-form", JSON.stringify(form1));
+      }
+
       setStep("step3");
     }
   }
@@ -109,7 +155,7 @@ export const Step2 = ({
                     setForm({ ...form1, phonenumber: e.target.value });
                   }}
                   value={formPhonenumber}
-                  placeholder="Last name"
+                  placeholder="----/----"
                   className="rounded-2 border border-[#CBD5E1] w-[416px] py-3 px-3 text-[#121316] "
                 />
                 {errors.phoneNumber && (

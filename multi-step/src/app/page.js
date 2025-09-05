@@ -1,6 +1,6 @@
 "use client";
 import { Step1, Step2, Step3, Step4 } from "@/components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 const Page = () => {
   // const localForm = localForm.getitem("myForm");
 
@@ -20,6 +20,15 @@ const Page = () => {
       confirmPassword: "",
     }
   );
+  useEffect(() => {
+    const localForm = localStorage.getItem("my-form");
+
+    console.log({ localForm });
+
+    if (localForm) {
+      setForm(JSON.parse(localForm));
+    }
+  }, []);
 
   const [step, setStep] = useState("step3");
 
@@ -47,6 +56,7 @@ const Page = () => {
           formEmail={form.email}
           formPassword={form.password}
           formConfirmPassword={form.confirmPassword}
+          formPhonenumber={form.phonenumber}
           setStep={setStep}
           form1={form}
         />
