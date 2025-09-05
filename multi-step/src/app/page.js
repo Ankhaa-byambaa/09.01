@@ -30,7 +30,7 @@ const Page = () => {
     }
   }, []);
 
-  const [step, setStep] = useState("step3");
+  const [step, setStep] = useState("step1");
 
   console.log(form);
 
